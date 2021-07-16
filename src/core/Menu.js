@@ -24,15 +24,29 @@ const Menu = ({ history }) => {
                     </Link>
                 </li>
 
-                <li className="nav-item">
-                    <Link 
-                        className="nav-link" 
-                        style={isActive(history, "/dashboard")} 
-                        to="/dashboard"
-                    >
-                        Dashboard
-                    </Link>
-                </li>
+                {isAuthenticated() && isAuthenticated().user.role === 0 && (
+                    <li className="nav-item">
+                        <Link 
+                            className="nav-link" 
+                            style={isActive(history, "/user/dashboard")} 
+                            to="/user/dashboard"
+                        >
+                            Dashboard
+                        </Link>
+                    </li>
+                )}
+
+                {isAuthenticated() && isAuthenticated().user.role === 1 && (
+                    <li className="nav-item">
+                        <Link 
+                            className="nav-link" 
+                            style={isActive(history, "/admin/dashboard")} 
+                            to="/admin/dashboard"
+                        >
+                            Dashboard
+                        </Link>
+                    </li>
+                )}
 
                 {!isAuthenticated() && (
                     <Fragment>
@@ -64,7 +78,7 @@ const Menu = ({ history }) => {
                         className="nav-link" 
                         style={{cursor: "pointer", color: "#ffffff"}} 
                         onClick={() => signout(() => {
-                            history.push("/");
+                            history.push("/signin");
                         })}
                     >
                         Signout
