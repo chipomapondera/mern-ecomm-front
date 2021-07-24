@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import Layout from "../core/Layout";
 import { Redirect } from "react-router-dom";
+import Layout from "../core/Layout";
 import { signin, authenticate, isAuthenticated } from "../auth"
 
 const Signin = () => {
-
     const [values, setValues] = useState({
         email: "mary@gmail.com",
         password: "maryyy9",
@@ -14,10 +13,10 @@ const Signin = () => {
     });
 
     const { email, password, error, loading, redirectToReferrer } = values;
-    const {user} = isAuthenticated();
+    const { user } = isAuthenticated();
 
     const handleChange = name => event => {
-        setValues({...values, error: false, [name]: event.target.value});
+        setValues({ ...values, error: false, [name]: event.target.value });
     };
 
     const clickSubmit = event => {
@@ -26,7 +25,7 @@ const Signin = () => {
         signin({ email, password })
         .then(data => {
             if(data.error) {
-                setValues({...values, error: data.error, loading: false})
+                setValues({ ...values, error: data.error, loading: false });
             } else {
                 authenticate(data, () => {
                     setValues({
@@ -69,28 +68,28 @@ const Signin = () => {
     const showError = () => (
         <div 
             className="alert alert-danger" 
-            style={{display: error ? "" : "none"}}
+            style={{ display: error ? "" : "none" }}
         >
             {error}
         </div>
     );
 
-    const showLoading = () => (
-        loading && (
+    const showLoading = () => {
+        return loading && (
             <div className="alert alert-info">
                 <h2>Loading...</h2>
             </div>
         )
-    );
+    };
 
     const redirectUser = () => {
-        if(redirectToReferrer) {
-            if(user && user.role === 1) {
+        if (redirectToReferrer) {
+            if (user && user.role === 1) {
                 return <Redirect to="/admin/dashboard" />
             } else {
                 return <Redirect to="/user/dashboard" />
-            };
-        };
+            }
+        }
         if(isAuthenticated()) {
             return <Redirect to="/" />
         }
