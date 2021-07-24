@@ -4,11 +4,11 @@ import { signout, isAuthenticated } from "../auth";
 
 const isActive = (history, path) => {
     if(history.location.pathname === path) {
-        return {color: "#ff9900"}
+        return { color: "#ff9900" }
     } else  {
-        return {color: "#ffffff"}
-    };
-}
+        return { color: "#ffffff" }
+    }
+};
 
 const Menu = ({ history }) => {
     return (
@@ -76,7 +76,7 @@ const Menu = ({ history }) => {
                     <li className="nav-item">
                     <span 
                         className="nav-link" 
-                        style={{cursor: "pointer", color: "#ffffff"}} 
+                        style={{ cursor: "pointer", color: "#ffffff" }} 
                         onClick={() => signout(() => {
                             history.push("/signin");
                         })}
