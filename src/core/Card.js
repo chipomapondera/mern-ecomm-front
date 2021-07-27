@@ -10,6 +10,7 @@ const Card = ({ product }) => {
                     {product.name}
                 </div>
                 <div className="card-body">
+                    <ShowImage item={product} url="product" />
                     <p>{product.description}</p>
                     <p>${product.price}</p>
                     <Link to="/">
