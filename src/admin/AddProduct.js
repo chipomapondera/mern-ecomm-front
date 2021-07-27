@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../auth";
-import { createProduct } from "./apiAdmin";
+import { createProduct, getCategories } from "./apiAdmin";
 
 const AddProduct = () =>{
     const [values, setValues] = useState({
@@ -39,8 +39,24 @@ const AddProduct = () =>{
         formData
     } = values;
 
+    // load categories and set form data
+    const init = () => {
+        getCategories()
+        .then(data => {
+            if (data.error) {
+                setValues({ ...values, error: data.error });
+            } else {
+                setValues({ 
+                    ...values, 
+                    categories: data, 
+                    formData: new FormData()
+                });
+            }
+        });
+    };
+
     useEffect(() => {
-        setValues({ ...values, formData: new FormData() })
+        init()
     }, []);
 
     const handleChange = name => event => {
@@ -121,9 +137,12 @@ const AddProduct = () =>{
                         onChange={handleChange("category")} 
                         className="form-control" 
                     >
-                        <option value="">Select Category</option>
-                        <option value="60e6ab77fd2d9d0391ede88b">Node</option>
-                        <option value="60eaca972c5f4608e48fa8db">Python</option>
+                        <option>Select Category</option>
+                        {categories && categories.map((category, index) => (
+                            <option key={index} value={category._id}>
+                                {category.name}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
@@ -133,7 +152,7 @@ const AddProduct = () =>{
                         onChange={handleChange("shipping")} 
                         className="form-control" 
                     >
-                        <option value="">Select Shipping</option>
+                        <option>Select Shipping</option>
                         <option value="0">No</option>
                         <option value="1">Yes</option>
                     </select>
