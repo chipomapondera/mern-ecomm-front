@@ -79,6 +79,7 @@ const AddCategory = () => {
         <Layout 
             title="Add a new category" 
             description={`Hi ${user.name}, ready to add a new category?`} 
+            className="container-fluid"
         >
             <div className="row">
                 <div className="col-md-8 offset-md-2">

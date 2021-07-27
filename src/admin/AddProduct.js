@@ -210,6 +210,7 @@ const AddProduct = () =>{
         <Layout 
             title="Add a new product" 
             description={`Hi ${user.name}, ready to add a new product?`} 
+            className="container-fluid"
         >
             <div className="row">
                 <div className="col-md-8 offset-md-2">
