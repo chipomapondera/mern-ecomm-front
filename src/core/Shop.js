@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
 import Card from "./Card";
+import Checkbox from "./Checkbox";
 import { getCategories } from "./apiCore";
 
 const Shop = () => {
@@ -30,7 +31,10 @@ const Shop = () => {
         >
             <div className="row">
                 <div className="col-4">
-                    {JSON.stringify(categories)};
+                    <h4>Filter by Categories</h4>
+                    <ul>
+                        <Checkbox categories={categories} />
+                    </ul>
                 </div>
                 <div className="col-8">
                     right
