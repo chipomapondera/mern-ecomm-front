@@ -62,12 +62,12 @@ const AddProduct = () =>{
     const handleChange = name => event => {
         const value = name === "photo" ? event.target.files[0] : event.target.value
         formData.set(name, value)
-        setValues({ ...values, [name]: value })
+        setValues({ ...values, [name]: value, error: "", createdProduct: "" })
     };
 
     const clickSubmit = e => {
         e.preventDefault()
-        setValues({ ...values, error: "", loadng: true });
+        setValues({ ...values, error: "", loading: true });
         createProduct(user._id, token, formData)
         .then(data => {
             if (data.error) {
@@ -176,13 +176,35 @@ const AddProduct = () =>{
     };
 
     const goBack = () => (
-        <div className="mt-5">
+        <div className="mt-5 mb-5">
             <Link to="/admin/dashboard" className="text-warning">
                 Back to Dashboard
             </Link>
         </div>
     );
 
+    const showLoading = () =>
+        loading && (
+            <div className="alert alert-success">
+                <h2>Loading...</h2>
+            </div>
+        );
+
+    const showSuccess = () => (
+        <div className="alert alert-info" style={{ display: createdProduct ? "" : "none" }}>
+            <h4>
+                {`${createdProduct}`} is created!
+            </h4>
+        </div>
+    );
+
+    const showError = () => (
+        <div className="alert alert-danger" style={{ display: error ? "" : "none" }}>
+            <h4>
+                {error}
+            </h4>
+        </div>
+    );
 
     return (
         <Layout 
@@ -191,6 +213,9 @@ const AddProduct = () =>{
         >
             <div className="row">
                 <div className="col-md-8 offset-md-2">
+                    {showLoading()}
+                    {showSuccess()}
+                    {showError()}
                     {newPostForm()}
                     {goBack()}
                 </div>
