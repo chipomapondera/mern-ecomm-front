@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { getCategories } from "./apiCore";
 
 const Checkbox = ({ categories }) => {
     const [checked, setChecked] = useState([]);
