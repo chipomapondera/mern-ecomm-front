@@ -30,10 +30,32 @@ const Shop = () => {
 
     const handleFilters = (filters, filterBy) => {
         // console.log("SHOP: ", filters, filterBy)
-        const newFilters = { ...myFilters }
-        newFilters.filters[filterBy] = filters
-        setMyFilters(newFilters)
+        const newFilters = { ...myFilters };
+        newFilters.filters[filterBy] = filters;
+
+        if (filterBy == "price") {
+            let priceValues = handlePrice(filters)
+            newFilters.filters[filterBy] = priceValues;
+        }
+        loadFilteredResults(myFilters.filters)
+        setMyFilters(newFilters);
     };
+
+    const handlePrice = value => {
+        const data = prices;
+        let array = [];
+
+        for(let key in data) {
+            if (data[key]._id === parseInt(value)) {
+                array = data[key].array;
+            }
+        }
+        return array;
+    };
+
+    const loadFilteredResults = (newFilters) => {
+        console.log(newFilters)
+    }
 
     return (
         <Layout 
@@ -42,7 +64,7 @@ const Shop = () => {
             className="container-fluid"
         >
             <div className="row">
-                <div className="col-4">
+                <div className="col-4 mb-5">
                     <h4>Filter by Categories</h4>
                     <ul>
                         <Checkbox 
