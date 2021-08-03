@@ -60,9 +60,9 @@ const AddProduct = () =>{
     }, []);
 
     const handleChange = name => event => {
-        const value = name === "photo" ? event.target.files[0] : event.target.value
-        formData.set(name, value)
-        setValues({ ...values, [name]: value, error: "", createdProduct: "" })
+        const value = name === "photo" ? event.target.files[0] : event.target.value;
+        formData.set(name, value);
+        setValues({ ...values, [name]: value, error: "", createdProduct: "" });
     };
 
     const clickSubmit = e => {
@@ -71,7 +71,7 @@ const AddProduct = () =>{
         createProduct(user._id, token, formData)
         .then(data => {
             if (data.error) {
-                setValues({ ...values, error: data.error })
+                setValues({ ...values, error: data.error });
             } else {
                 setValues({
                     ...values,
