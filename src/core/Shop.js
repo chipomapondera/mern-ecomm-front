@@ -14,7 +14,7 @@ const Shop = () => {
     const [error, setError] = useState(false);
     const [limit, setLimit] = useState(6);
     const [skip, setSkip] = useState(0);
-    const [filteredResults, setFilteredResults] = useState(0);
+    const [filteredResults, setFilteredResults] = useState([]);
 
     const init = () => {
         getCategories()
@@ -27,11 +27,6 @@ const Shop = () => {
         });
     };
 
-    useEffect(() => {
-        init();
-        loadFilteredResults(skip, limit, myFilters.filters)
-    }, []);
-
     const loadFilteredResults = (newFilters) => {
         // console.log(newFilters);
         getFilteredProducts(skip, limit, newFilters)
@@ -39,10 +34,15 @@ const Shop = () => {
                 if (data.error) {
                     setError(data.error);
                 } else {
-                    setFilteredResults(data);
+                    setFilteredResults(data.data);
                 }
             })
     };
+
+    useEffect(() => {
+        init();
+        loadFilteredResults(skip, limit, myFilters.filters)
+    }, []);
 
     const handleFilters = (filters, filterBy) => {
         // console.log("SHOP: ", filters, filterBy)
@@ -77,8 +77,8 @@ const Shop = () => {
             className="container-fluid"
         >
             <div className="row">
-                <div className="col-4 mb-5">
-                    <h4>Filter by Categories</h4>
+                <div className="col-3 mb-5">
+                    <h4>Filter by categories</h4>
                     <ul>
                         <Checkbox 
                             categories={categories} 
@@ -87,7 +87,7 @@ const Shop = () => {
                             } 
                         />
                     </ul>
-                    <h4>Filter by Price Range</h4>
+                    <h4>Filter by price range</h4>
                     <div>
                         <RadioBox 
                             prices={prices} 
@@ -98,7 +98,12 @@ const Shop = () => {
                     </div>
                 </div>
                 <div className="col-8">
-                    {JSON.stringify(filteredResults)}
+                    <h2 className="mb-4">Products</h2>
+                    <div className="row">
+                        {filteredResults.map((product, index) => (
+                            <Card key={index} product={product} />
+                        ))}
+                    </div>
                 </div>
             </div>
         </Layout>
