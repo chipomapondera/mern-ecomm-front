@@ -26,8 +26,10 @@ export const getCategories = () => {
 
 export const getFilteredProducts = (skip, limit, filters = {}) => {
     const data = {
-        limit, skip, filters
-    }
+        limit, 
+        skip, 
+        filters
+    };
     return fetch(`${API}/products/by/search`, {
         method: "POST",
         headers: {
@@ -36,12 +38,12 @@ export const getFilteredProducts = (skip, limit, filters = {}) => {
         },
         body: JSON.stringify(data)
     })
-    .then(res => {
-        return res.json();
-    })
-    .catch(err => {
-        console.log(err);
-    });
+        .then(res => {
+            return res.json();
+        })
+        .catch(err => {
+            console.log(err);
+        });
 };
 
 
