@@ -4,24 +4,22 @@ import ShowImage from "./ShowImage";
 
 const Card = ({ product }) => {
     return (
-        <div className="col-4 mb-3">
-            <div className="card">
-                <div className="card-header"> 
-                    {product.name}
-                </div>
-                <div className="card-body">
-                    <ShowImage item={product} url="product" />
-                    <p>{product.description.substring(0, 100)}</p>
-                    <p>${product.price}</p>
-                    <Link to={`product/${product._id}`}>
+        <div className="card">
+            <div className="card-header"> 
+                {product.name}
+            </div>
+            <div className="card-body">
+                <ShowImage item={product} url="product" />
+                <p>{product.description.substring(0, 100)}</p>
+                <p>${product.price}</p>
+                <Link to={`product/${product._id}`}>
                     <button className="btn btn-outline-primary mt-2 mb-2">
                         View Product
                     </button>
-                    </Link>
-                    <button className="btn btn-outline-warning mt-2 mb-2 ml-2">
-                        Add to cart
-                    </button>
-                </div>
+                </Link>
+                <button className="btn btn-outline-warning mt-2 mb-2 ml-2">
+                    Add to cart
+                </button>
             </div>
         </div>
     );
