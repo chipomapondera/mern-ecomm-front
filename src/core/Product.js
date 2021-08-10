@@ -34,11 +34,13 @@ const Product = (props) => {
             className="container-fluid"
         >
             <div className="row">
-                {
-                    product && 
-                    product.description && 
-                    <Card product={product} showViewProductButton={false} />
-                }
+                <div className="col-8">
+                    {
+                        product && 
+                        product.description && 
+                        <Card product={product} showViewProductButton={false} />
+                    }
+                </div>
             </div>
         </Layout>
     )
