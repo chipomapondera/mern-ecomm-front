@@ -1,27 +1,37 @@
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
-import { read } from "./apiCore";
+import { read, listRelated } from "./apiCore";
 import Card from "./Card";
-import Search from "./Search";
 
-const Product = (props) => {
+const Product = props => {
     const [product, setProduct] = useState({});
+    const [relatedProduct, setRelatedProduct] = useState([]);
     const [error, setError] = useState(false);
+    
 
     const loadSingleProduct = productId => {
         read(productId).then(data => {
             if (data.error) {
-                setError(data.error)
+                setError(data.error);
             } else {
                 setProduct(data);
+                // fetch related products
+                listRelated(data._id).then(data => {
+                    console.log("RELATED PRODS: ", data)
+                    if (data.error) {
+                        setError(data.error);
+                    } else {
+                        setRelatedProduct(data);
+                    }
+                });
             }
-        })
-    }
+        });
+    };
 
     useEffect(() => {
         const productId = props.match.params.productId
         loadSingleProduct(productId);
-    }, [])
+    }, []);
 
     return (
         <Layout 
@@ -40,6 +50,14 @@ const Product = (props) => {
                         product.description && 
                         <Card product={product} showViewProductButton={false} />
                     }
+                </div>
+                <div className="col-4">
+                    <h4>Related Products</h4>
+                    {relatedProduct.map((product, index) => (
+                        <div className="mb-3" key={index}>
+                            <Card product={product} />
+                        </div>
+                    ))}
                 </div>
             </div>
         </Layout>
