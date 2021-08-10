@@ -46,7 +46,7 @@ const Search = () => {
                 if (response.error) {
                     console.log(response.error)
                 } else {
-                    setData({...data, results: response, searched: true});
+                    setData({ ...data, results: response, searched: true });
                 }
             });
         }
@@ -56,15 +56,30 @@ const Search = () => {
         setData({ ...data, [name]: event.target.value, searched: false });
     };
 
+    const searchMessage = (searched, results) => {
+        if (searched && results.length > 0) {
+            return `Found ${results.length} products`;
+        }
+
+        if (searched && results.length < 1) {
+            return `No products found`;
+        } 
+    };
+
     const searchedProducts = (results = []) => {
         return (
-            <div className="row">
-                {results.map((product, index) => (
-                    <Card key={index} product={product} />
-                ))}
+            <div>
+                <h2 className="mt-4 mb-4">
+                    {searchMessage(searched, results)}
+                </h2>
+                <div className="row">
+                    {results.map((product, index) => (
+                        <Card key={index} product={product} />
+                    ))}
+                </div>
             </div>
-        )
-    }
+        );
+    };
 
     const searchForm = () => {
         return (
@@ -76,7 +91,7 @@ const Search = () => {
                                 className="btn mr-2" 
                                 onChange={handleChange("category")}
                             >
-                                <option value="All">Select category</option>
+                                <option value="All">All categories</option>
                                 {categories.map((category, index) => (
                                     <option key={index} value={category._id}>
                                         {category.name}
@@ -93,7 +108,7 @@ const Search = () => {
                     </div>
                     <div 
                         className="btn input-group-append" 
-                        style={{brder:"none"}}
+                        style={{ border:"none" }}
                     >
                         <button className="input-group-text">
                             Search
