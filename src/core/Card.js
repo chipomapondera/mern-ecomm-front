@@ -4,10 +4,15 @@ import ShowImage from "./ShowImage";
 import moment from "moment";
 import { addItem } from "./cartHelpers";
 
-const Card = ({ product, showViewProductButton = true, showAddToCartButton = true }) => {
+const Card = ({ 
+    product, 
+    showViewProductButton = true, 
+    showAddToCartButton = true,
+    cartUpdate = false
+}) => {
     const [redirect, setRedirect] = useState(false);
 
-    const ViewProductButton = (showViewProductButton) => {
+    const viewProductButton = (showViewProductButton) => {
         return (
             showViewProductButton && (
                 <Link to={`product/${product._id}`} className="mr-2">
@@ -31,7 +36,7 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton = tru
         }
     }
 
-    const AddToCartButton = showAddToCartButton => {
+    const addToCartButton = showAddToCartButton => {
         return (
             showAddToCartButton && (
                 <button 
@@ -51,6 +56,10 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton = tru
             <span className="badge badge-primary badge-pill">Out of Stock</span>
         );
     };
+
+    const cartUpdateOptions = (cartUpdate) => {
+        return cartUpdate && <div>increment/ decrement</div>
+    }
 
     return (
         <div className="card">
@@ -74,8 +83,9 @@ const Card = ({ product, showViewProductButton = true, showAddToCartButton = tru
                 </p>
                 {showStock(product.quantity)}
                 <br/>
-                {ViewProductButton(showViewProductButton)}
-                {AddToCartButton(showAddToCartButton)}
+                {viewProductButton(showViewProductButton)}
+                {addToCartButton(showAddToCartButton)}
+                {cartUpdateOptions(cartUpdate)}
             </div>
         </div>
     );

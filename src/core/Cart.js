@@ -23,6 +23,7 @@ const Cart = () => {
                             key={index} 
                             product={product} 
                             showAddToCartButton={false} 
+                            cartUpdate = {true}
                         />
                     </div>
                     )
