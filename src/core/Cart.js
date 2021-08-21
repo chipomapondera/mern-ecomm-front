@@ -19,7 +19,11 @@ const Cart = () => {
                 {items.map((product, index) => {
                     return (
                         <div className="mb-3">
-                        <Card key={index} product={product} />
+                        <Card 
+                            key={index} 
+                            product={product} 
+                            showAddToCartButton={false} 
+                        />
                     </div>
                     )
                 })}
