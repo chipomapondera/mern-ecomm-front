@@ -6,10 +6,12 @@ import Card from "./Card";
 
 const Cart = () => {
     const [items, setItems] = useState([]);
+    const [run, setRun] = useState(false);
 
     useEffect(() => {
-        setItems(getCart())
-    }, [])
+        console.log("MAX DEPTH...")
+        setItems(getCart());
+    }, [run]);
 
     const showItems = items => {
         return (
@@ -24,6 +26,9 @@ const Cart = () => {
                             product={product} 
                             showAddToCartButton={false} 
                             cartUpdate = {true}
+                            showRemoveProductButton={true}
+                            setRun={setRun}
+                            run={run}
                         />
                     </div>
                     )
@@ -32,12 +37,12 @@ const Cart = () => {
         );
     };
 
-    const noItemsMessage = () => {
+    const noItemsMessage = () => (
         <h2>
             Your card is empty<br/>
             <Link to="/shop">Continue shopping</Link>
         </h2>
-    };
+    );
 
     return (
         <Layout 
