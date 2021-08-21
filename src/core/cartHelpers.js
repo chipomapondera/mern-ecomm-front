@@ -29,10 +29,19 @@ export const addItem = (item, next) => {
 export const itemTotal = () => {
     if (typeof window !== "undefined") {
         if (localStorage.getItem("cart")) {
-            return JSON.parse(localStorage.getItem("cart")).length
+            return JSON.parse(localStorage.getItem("cart")).length;
         }
     }
     return 0;
+};
+
+export const getCart = () => {
+    if (typeof window !== "undefined") {
+        if (localStorage.getItem("cart")) {
+            return JSON.parse(localStorage.getItem("cart"));
+        }
+    }
+    return [];
 };
 
 

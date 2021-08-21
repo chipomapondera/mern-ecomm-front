@@ -5,6 +5,7 @@ import Signin from "./user/Signin";
 import Home from "./core/Home";
 import Shop from "./core/Shop";
 import Product from "./core/Product";
+import Cart from "./core/Cart";
 import PrivateRoute from "./auth/PrivateRoute";
 import Dashboard from "./user/UserDashboard";
 import AdminRoute from "./auth/AdminRoute";
@@ -25,6 +26,7 @@ const Routes = () => {
                 <AdminRoute path="/create/category" exact component={AddCategory} />
                 <AdminRoute path="/create/product" exact component={AddProduct} />
                 <Route path="/product/:productId" exact component={Product} />
+                <Route path="/cart" exact component={Cart} />
             </Switch>
         </BrowserRouter>
     );
