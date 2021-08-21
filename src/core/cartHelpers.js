@@ -20,8 +20,20 @@ export const addItem = (item, next) => {
         cart = Array.from(new Set(cart.map(product => (product._id)))).map(id => {
             return cart.find(product => product._id === id);
         });
-        
+
         localStorage.setItem("cart", JSON.stringify(cart));
         next();
     }
-}
+};
+
+export const itemTotal = () => {
+    if (typeof window !== "undefined") {
+        if (localStorage.getItem("cart")) {
+            return JSON.parse(localStorage.getItem("cart")).length
+        }
+    }
+    return 0;
+};
+
+
+
