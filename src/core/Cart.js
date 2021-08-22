@@ -10,7 +10,6 @@ const Cart = () => {
     const [run, setRun] = useState(false);
 
     useEffect(() => {
-        console.log("MAX DEPTH...")
         setItems(getCart());
     }, [run]);
 

@@ -113,10 +113,10 @@ const Card = ({
             <div className="card-body">
                 {shouldRedirect(redirect)}
                 <ShowImage item={product} url="product" />
-                <p className="card-p mt-2">
+                <p className="lead mt-2">
                     {product.description.substring(0, 100)}
                 </p>
-                <p className="card-p black-10">
+                <p className="lead black-10">
                     ${product.price}
                 </p>
                 <p className="black-9">

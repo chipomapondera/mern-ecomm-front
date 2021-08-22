@@ -126,7 +126,7 @@ const Shop = () => {
                     </div>
                 </div>
                 <div className="col-8">
-                    <h2 className="mb-4">Products</h2>
+                    <h3 className="mb-4">Products</h3>
                     <div className="row">
                         {filteredResults.map((product, index) => (
                             <div key={index} className="col-4 mb-3">
