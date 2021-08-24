@@ -92,7 +92,7 @@ export const getBraintreeClientToken = (userId, token) => {
             Accept: "application/json",
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`
-        },
+        }
     })
         .then(res => {
             return res.json();

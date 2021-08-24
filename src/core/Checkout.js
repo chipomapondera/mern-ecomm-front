@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Layout from "./Layout";
 import { getProducts, getBraintreeClientToken } from "./apiCore";
 import Card from "./Card";
 import { isAuthenticated } from "../auth";
@@ -51,6 +50,29 @@ const Checkout = ({ products }) => {
         )
     };
 
+    const buy = () => {
+        // send the nonce to your server
+        // nonce = data.instance.requestPaymentMethod()
+
+        let nonce;
+        let getNonce = data.instance.requestPaymentMethod()
+        .then(data => {
+            console.log(data)
+            nonce = data.nonce
+            // once you have nonce (card type, card number) send nonce as "paymentMethodNonce"
+            // and also total to be charged
+            console.log(
+                "send nonce and total to process: ", 
+                nonce, 
+                getTotal(products
+            ));
+        })
+        .catch(error => {
+            console.log("drpoin error: ", error);
+            setData({...data, error:error.message});
+        });
+    };
+
     const showDropIn = () => (
         <div>
             {data.clientToken !== null && products.length > 0 ? (
@@ -58,11 +80,11 @@ const Checkout = ({ products }) => {
                     <DropIn options={{
                         authorization: data.clientToken
                     }} onInstance={instance => (data.instance = instance)} />
-                    <button className="btn btn-success">Checkout</button>
+                    <button onClick={buy} className="btn btn-success">Pay</button>
                 </div>
             ) : null}
         </div>
-    )
+    );
 
     return (
         <div>
