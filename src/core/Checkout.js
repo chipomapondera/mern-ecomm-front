@@ -11,6 +11,7 @@ import DropIn from "braintree-web-drop-in-react";
 
 const Checkout = ({ products }) => {
     const [data, setData] = useState({
+        loading: false,
         success: false,
         clientToken: null,
         error: "",
@@ -55,15 +56,15 @@ const Checkout = ({ products }) => {
     };
 
     const buy = () => {
+        setData({ loading: true });
         // send the nonce to your server
         // nonce = data.instance.requestPaymentMethod()
-
         let nonce;
         let getNonce = data.instance
         .requestPaymentMethod()
         .then(data => {
             // console.log(data)
-            nonce = data.nonce
+            nonce = data.nonce;
             // once you have nonce (card type, card number) 
             // send nonce as "paymentMethodNonce"
             // and also total to be charged
@@ -78,14 +79,19 @@ const Checkout = ({ products }) => {
             };
             processPayment(userId, token, paymentData)
             .then(res => {
-                console.log(res)
+                console.log(res);
                 setData({ ...data, success: res.success});
                 emptyCart(() => {
                     console.log("payment success and empty cart");
+                    setData({ loading: false });
                 });
+                // empty cart
                 // create order
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                console.log(error);
+                setData({ loading: true })
+            });
         })
         .catch(error => {
             // console.log("dropin error: ", error);
@@ -98,8 +104,13 @@ const Checkout = ({ products }) => {
             {data.clientToken !== null && products.length > 0 ? (
                 <div>
                     <DropIn options={{
-                        authorization: data.clientToken
-                    }} onInstance={instance => (data.instance = instance)} />
+                        authorization: data.clientToken,
+                        paypal: {
+                            flow: "vault"
+                        }
+                    }} 
+                    onInstance={instance => (data.instance = instance)} 
+                />
                     <button onClick={buy} className="btn btn-success btn-block">Pay</button>
                 </div>
             ) : null}
@@ -121,9 +132,12 @@ const Checkout = ({ products }) => {
         </div>
     );
 
+    const showLoading = loading => loading && <h3>Loading...</h3>;
+
     return (
         <div>
             <h3>Total: ${getTotal()}</h3>
+            {showLoading(data.loading)}
             {showSuccess(data.success)}
             {showError(data.error)}
             {showCheckout()}
